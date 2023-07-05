@@ -4,6 +4,7 @@ from datetime import datetime
 from ..users.schemas import UserRead
 from ..models import User
 from ..status import ProjectStatus
+from ..project_members.schemas import ProjectMemberOut
 
 
 class ProjectIn(BaseModel):
@@ -18,7 +19,8 @@ class ProjectOut(ProjectIn):
     """Project model"""
 
     id: PydanticObjectId = Field(..., alias="_id")
-    created_by: BackLink[User]    # BackLink[User] = Field(..., alias="created_projects")
+    created_by: object  # BackLink[User] = Field(..., alias="created_projects")
+    project_members: list[object] = Field(default_factory=list)
     created_at: datetime
     updated_at: datetime
 

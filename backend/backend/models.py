@@ -1,4 +1,4 @@
-from beanie import Document, Link, BackLink
+from beanie import Document, Link
 from typing import Optional
 from pydantic import Field
 from datetime import datetime
@@ -30,7 +30,7 @@ class Project(Document):
     name: str
     description: str | None = None
     bugs: Optional[list[Link["Bug"]]] = Field(default_factory=list)
-    created_by: BackLink["User"] = Field(original_field="created_projects")
+    created_by: Link["User"] = Field(original_field="created_projects")
     project_members: Optional[list[Link["ProjectMember"]]] = Field(default_factory=list)
     status: ProjectStatus
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -46,10 +46,10 @@ class Bug(Document):
     priority: Priority
     status: Status
     comments: Optional[list[Link["Comment"]]] = Field(default_factory=list)
-    assigned_developer: Optional[BackLink["User"]] = Field(original_field="bugs_to_fix")
-    reporter: BackLink["User"] = Field(original_field="reported_bugs")
+    assigned_developer: Optional[Link["User"]] = Field(original_field="bugs_to_fix")
+    reporter: Link["User"] = Field(original_field="reported_bugs")
     files: Optional[list[Link["File"]]] = Field(default_factory=list)
-    project: Optional[BackLink["Project"]] = Field(original_field="bugs")
+    project: Optional[Link["Project"]] = Field(original_field="bugs")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -58,8 +58,8 @@ class Comment(Document):
     """Comment model"""
 
     content: str
-    author: BackLink["User"] = Field(original_field="comments")
-    bug: BackLink["Bug"] = Field(original_field="comments")
+    author: Link["User"] = Field(original_field="comments")
+    bug: Link["Bug"] = Field(original_field="comments")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -69,7 +69,7 @@ class File(Document):
 
     filename: str
     url: str
-    bug: BackLink["Bug"] = Field(original_field="files")
+    bug: Link["Bug"] = Field(original_field="files")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -77,9 +77,9 @@ class File(Document):
 class ProjectMember(Document):
     """ProjectMember model"""
 
-    user: BackLink["User"] = Field(original_field="project_members")
-    project: BackLink["Project"] = Field(original_field="project_members")
-    assigned_by: BackLink["User"] = Field(original_field="assigned_roles")
+    user: Link["User"] = Field(original_field="project_members")
+    project: Link["Project"] = Field(original_field="project_members")
+    assigned_by: Link["User"] = Field(original_field="assigned_roles")
     role: Role
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)

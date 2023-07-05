@@ -11,7 +11,7 @@ from ..project_members.schemas import (
     ProjectMemberUpdate,
     ProjectMemberIn,
 )
-from ..project_members.utils import write_project_member
+from ..project_members.utils import write_project_member, read_project_members
 from .utils import (
     write_project,
     read_project,
@@ -32,11 +32,6 @@ async def create_project(
     project: ProjectIn, user: User = Depends(current_active_verified_user)
 ):
     """A route to create a project"""
-    if user.role != Role.ADMIN:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="You don't have permission to create a project",
-        )
     try:
         return await write_project(user.id, project)
     except Exception as e:
@@ -82,11 +77,11 @@ async def delete_project(
         await check_project_permission(user, project_id)
         await remove_project(project_id)
     except Exception as e:
-        if e == "You don't have permission to access this project":
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=str(e),
-            )
+        # if e == "You don't have permission to access this project":
+        #     raise HTTPException(
+        #         status_code=status.HTTP_401_UNAUTHORIZED,
+        #         detail=str(e),
+        #     )
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
 
@@ -101,4 +96,25 @@ async def add_project_member(
     user: User = Depends(current_active_verified_user),
 ):
     """A route to add a project member"""
-    pass
+    try:
+        await check_project_permission(user, project_id)
+        await write_project_member(user.id, project_id, project_member)
+        return await read_project(project_id)
+    except Exception as e:
+        if e == "You don't have permission to access this project":
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=str(e),
+            )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    
+
+@router.get("/{project_id}/members", response_model=list)
+async def get_project_members(project_id: str):
+    """A route to get project members"""
+    try:
+        members = await read_project_members(project_id)
+        members = [member.to_dict() for member in members]
+        return members
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))

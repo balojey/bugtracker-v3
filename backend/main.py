@@ -6,6 +6,7 @@ from backend.auth.models import AccessToken
 from backend.users.routes import router as users_router
 from backend.auth.routes import router as auth_router
 from backend.projects.routes import router as projects_router
+from backend.project_members.routes import router as project_members_router
 
 
 app = FastAPI()
@@ -14,6 +15,7 @@ app = FastAPI()
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(projects_router)
+app.include_router(project_members_router)
 
 
 @app.on_event("startup")

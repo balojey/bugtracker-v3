@@ -18,7 +18,7 @@ class ProjectStatus(Enum):
 
     NEW = 1
     IN_PROGRESS = 2
-    CLOSED = 4
+    CLOSED = 3
 
     def __str__(self):
         return self.name
