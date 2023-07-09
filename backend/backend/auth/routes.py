@@ -6,7 +6,7 @@ from ..models import User
 from ..users.schemas import UserRead, UserCreate
 from ..config import Settings
 from .backend import auth_backend
-from .oauth2 import google_oauth_client
+from .oauth2 import google_oauth_client, github_oauth_client
 
 
 settings = Settings()
@@ -42,9 +42,27 @@ router.include_router(
     tags=["auth"],
 )
 router.include_router(
+    fastapi_users.get_oauth_router(
+        github_oauth_client,
+        auth_backend,
+        settings.secret_key,
+        associate_by_email=True,
+        is_verified_by_default=True,
+    ),
+    prefix="/auth/github",
+    tags=["auth"],
+)
+router.include_router(
     fastapi_users.get_oauth_associate_router(
         google_oauth_client, UserRead, settings.secret_key
     ),
     prefix="/auth/associate/google",
+    tags=["auth"],
+)
+router.include_router(
+    fastapi_users.get_oauth_associate_router(
+        github_oauth_client, UserRead, settings.secret_key
+    ),
+    prefix="/auth/associate/github",
     tags=["auth"],
 )

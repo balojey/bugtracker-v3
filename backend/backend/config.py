@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     database_name: str = "bug_tracker"  #getenv("DATABASE_NAME")
     google_client_id: str = "418248972238-to9uii1lslvc71hm7sjv2d3878rttr5q.apps.googleusercontent.com"  #getenv("GOOGLE_CLIENT_ID")
     google_client_secret: str = "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"   #getenv("GOOGLE_CLIENT_SECRET")
+    github_client_id: str = "3432372f72f25c5080eb"
+    github_client_secret: str = "c5257592e77a79cde18f152f517e64cbaac47ef8"
 
     class Config:
         env_file = ".env"
