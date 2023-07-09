@@ -1,14 +1,12 @@
-import uuid
 from datetime import datetime
 from typing import Any, Dict, Optional, Union
 from fastapi import Depends, Request, Response
 from fastapi_users import (
     BaseUserManager,
-    InvalidID,
     InvalidPasswordException,
-    UUIDIDMixin,
 )
 from fastapi_users_db_beanie import ObjectIDIDMixin
+from beanie.odm.fields import PydanticObjectId
 
 from ..config import Settings
 from .schemas import UserCreate
@@ -20,7 +18,7 @@ from ..auth.password_hash import password_helper
 settings = Settings()
 
 
-class UserManager(ObjectIDIDMixin, BaseUserManager[User, uuid.UUID]):
+class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
     reset_password_token_secret = settings.secret_key
     verification_token_secret = settings.secret_key
 

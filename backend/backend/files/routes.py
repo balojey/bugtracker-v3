@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_users import FastAPIUsers
-import uuid
+from beanie.odm.fields import PydanticObjectId
 from ..models import User
 from ..auth.backend import auth_backend
 from ..users.user_manager import get_user_manager
@@ -9,7 +9,7 @@ from .utils import read_attachment, remove_attachment
 
 
 router = APIRouter(prefix="/files", tags=["files"])
-fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
+fastapi_users = FastAPIUsers[User, PydanticObjectId](get_user_manager, [auth_backend])
 current_active_verified_user = fastapi_users.current_user(active=True, verified=True)
 
 

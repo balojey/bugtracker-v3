@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_users import FastAPIUsers
-import uuid
+from beanie.odm.fields import PydanticObjectId
 from ..models import User
 from ..auth.backend import auth_backend
 from ..users.user_manager import get_user_manager
@@ -26,7 +26,6 @@ from .utils import (
     read_bug,
     edit_bug,
     assign_bug_to_developer,
-    check_developer_role_in_project,
     edit_bug_priority,
     edit_bug_status,
     remove_bug,
@@ -34,7 +33,7 @@ from .utils import (
 
 
 router = APIRouter(prefix="/bugs", tags=["bugs"])
-fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
+fastapi_users = FastAPIUsers[User, PydanticObjectId](get_user_manager, [auth_backend])
 current_active_verified_user = fastapi_users.current_user(active=True, verified=True)
 
 

@@ -7,7 +7,7 @@ from ..models import ProjectMember
 from ..roles import Role
 
 
-class UserRead(schemas.BaseUser[uuid.UUID]):
+class UserRead(schemas.BaseUser[PydanticObjectId]):
     first_name: str
     last_name: str
     role: Role

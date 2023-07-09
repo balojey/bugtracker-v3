@@ -1,4 +1,4 @@
-import uuid
+from beanie.odm.fields import PydanticObjectId
 from fastapi import APIRouter
 from fastapi_users import FastAPIUsers
 from ..users.user_manager import get_user_manager
@@ -10,7 +10,7 @@ from .oauth2 import google_oauth_client
 
 
 settings = Settings()
-fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
+fastapi_users = FastAPIUsers[User, PydanticObjectId](get_user_manager, [auth_backend])
 
 
 router = APIRouter()
