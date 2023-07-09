@@ -29,5 +29,6 @@ The following are the features of this application
 
 Big shoutout to the creators of [fastapi-users](https://fastapi-users.github.io/) and [beanie odm](https://beanie-odm.dev/). These tools sped up my development process a ton.
 
+## Outro
 I am Ademola Balogun
 I can be reached via email at: [ademolabalogun91@gmail.com](https://mailto:ademolabalogun91@gmail.com)
