@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 from typing import Any, Dict, Optional, Union
 from fastapi import Depends, Request, Response
 from fastapi_users import (
@@ -108,6 +109,7 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, uuid.UUID]):
     async def on_after_update(
         self, user: User, update_dict: Dict[str, Any], request: Optional[Request] = None
     ):
+        user.updated_at = datetime.utcnow()
         print(f"User {user.id} has been updated with {update_dict}")
 
     async def on_after_login(

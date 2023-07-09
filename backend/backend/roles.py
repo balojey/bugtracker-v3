@@ -7,4 +7,12 @@ class Role(str, Enum):
     DEVELOPER = "developer"
     PROJECT_MANAGER = "project_manager"
     QA_TESTER = "qa_tester"
+    OTHER = "other"
+
+
+class ProjectMemberRole(str, Enum):
+    """ProjectMember roles"""
+    DEVELOPER = "developer"
+    PROJECT_MANAGER = "project_manager"
+    QA_TESTER = "qa_tester"
     ADMIN = "admin"

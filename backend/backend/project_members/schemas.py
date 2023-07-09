@@ -2,14 +2,14 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 from beanie.odm.fields import PydanticObjectId
-from ..roles import Role
+from ..roles import ProjectMemberRole
 
 
 class ProjectMemberIn(BaseModel):
     """ProjectMember model"""
 
     email: str
-    role: Optional[Role]
+    role: ProjectMemberRole
 
 
 class ProjectMemberOut(BaseModel):
@@ -17,9 +17,9 @@ class ProjectMemberOut(BaseModel):
 
     id: PydanticObjectId = Field(..., alias="_id")
     user: object
-    # project: object
-    # assigned_by: object
-    role: Role
+    project: object
+    role: ProjectMemberRole
+    role_assigned_by: object
     created_at: datetime
     updated_at: datetime
 
@@ -27,4 +27,4 @@ class ProjectMemberOut(BaseModel):
 class ProjectMemberUpdate(BaseModel):
     """ProjectMember model"""
 
-    role: Role
+    role: ProjectMemberRole

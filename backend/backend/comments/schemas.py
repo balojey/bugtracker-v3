@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from beanie.odm.fields import PydanticObjectId
 from datetime import datetime
 
 
@@ -11,7 +12,8 @@ class CommentIn(BaseModel):
 class CommentOut(CommentIn):
     """Comment model"""
 
-    id: str = Field(..., alias="_id")
+    id: PydanticObjectId = Field(..., alias="_id")
+    author: object
     created_at: datetime
     updated_at: datetime
 

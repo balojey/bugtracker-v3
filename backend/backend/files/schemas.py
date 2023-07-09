@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 from datetime import datetime
+from beanie.odm.fields import PydanticObjectId
 
 
 class FileIn(BaseModel):
@@ -12,7 +13,7 @@ class FileIn(BaseModel):
 class FileOut(FileIn):
     """File model"""
 
-    id: str = Field(..., alias="_id")
+    id: PydanticObjectId = Field(..., alias="_id")
     created_at: datetime
     updated_at: datetime
 

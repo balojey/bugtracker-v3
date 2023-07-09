@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Optional
 from beanie.odm.fields import PydanticObjectId, BackLink
 from datetime import datetime
 from ..users.schemas import UserRead
@@ -12,15 +13,14 @@ class ProjectIn(BaseModel):
 
     name: str
     description: str | None = None
-    status: ProjectStatus
 
 
 class ProjectOut(ProjectIn):
     """Project model"""
 
     id: PydanticObjectId = Field(..., alias="_id")
-    created_by: object  # BackLink[User] = Field(..., alias="created_projects")
-    project_members: list[object] = Field(default_factory=list)
+    created_by: object
+    status: ProjectStatus
     created_at: datetime
     updated_at: datetime
 
