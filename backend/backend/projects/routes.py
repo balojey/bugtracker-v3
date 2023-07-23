@@ -22,6 +22,7 @@ from ..bugs.utils import write_bug, read_bugs
 from .utils import (
     write_project,
     read_project,
+    read_projects,
     edit_project,
     remove_project,
 )
@@ -40,6 +41,15 @@ async def create_project(
     """A route to create a project"""
     try:
         return await write_project(user, project)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    
+
+@router.get("/", response_model=list[ProjectOut], status_code=status.HTTP_200_OK)
+async def get_projects(user: User = Depends(current_active_verified_user)):
+    """A route to get projects a user belongs to"""
+    try:
+        return await read_projects(user)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 

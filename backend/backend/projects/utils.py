@@ -33,6 +33,26 @@ async def read_project(project_id: str) -> Project:
         raise Exception(e)
 
 
+async def read_projects(user: User) -> list[Project]:
+    """A function to read all project a user is a member of from the database"""
+    try:
+        # Get all project members objects that belongs to user
+        pms = await ProjectMember.find().to_list()
+        pms = [pm for pm in pms if pm.user.ref.id == user.id]
+        if not pms:
+            raise Exception("No project found")
+
+        # Get the projects of each project member
+        projects = [await Project.get(pm.project.ref.id) for pm in pms]
+
+        # Fetch all relationships
+        for project in projects:
+            await project.fetch_all_links()
+        return projects
+    except Exception as e:
+        raise Exception(e)
+
+
 async def edit_project(db_project: Project, project: ProjectUpdate) -> ProjectOut:
     """A function to update a project from the database"""
     try:
@@ -54,7 +74,7 @@ async def remove_project(project: Project) -> None:
         for pm in project_members:
             if pm.project.ref.id == project.id:
                 pms.append(pm)
-        
+
         # Get bugs of project, files of bugs and comments of bugs
         bugs = await Bug.all().to_list()
         if bugs:
