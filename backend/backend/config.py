@@ -1,6 +1,7 @@
 from pydantic import BaseSettings
 from dotenv import load_dotenv
 from os import getenv
+from urllib.parse import quote_plus
 
 
 load_dotenv(".env")

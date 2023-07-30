@@ -37,6 +37,20 @@ fastapi_users = FastAPIUsers[User, PydanticObjectId](get_user_manager, [auth_bac
 current_active_verified_user = fastapi_users.current_user(active=True, verified=True)
 
 
+@router.get("/{bug_id}", response_model=BugOut, status_code=status.HTTP_200_OK)
+async def get_bug(bug_id: str):
+    """A route to get a bug"""
+    try:
+        bug = await read_bug(bug_id)
+        if not bug:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Bug not found"
+            )
+        return bug
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+
+
 @router.patch("/{bug_id}", response_model=BugOut, status_code=status.HTTP_200_OK)
 async def update_bug(
     bug_id: str, bug: BugUpdate, user: User = Depends(current_active_verified_user)
