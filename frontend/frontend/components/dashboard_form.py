@@ -3,6 +3,8 @@ from ..states.dashboard_state import DashBoardPageState
 from ..schemas.roles import roles
 from ..schemas.priority import Priority, priorities
 
+color = "rgb(107,99,246)"
+
 
 def dashboard_form():
     """Form for reporting new bug and form for adding project members"""
@@ -36,8 +38,8 @@ def dashboard_form():
                                                 size="lg",
                                             ),
                                             rx.text_area(
-                                                placeholder="Bug description",
-                                                id="description",
+                                                placeholder="Steps to reproduce",
+                                                id="steps_to_reproduce",
                                                 is_required=True,
                                                 size="lg",
                                             ),
@@ -48,7 +50,38 @@ def dashboard_form():
                                                     on_change=DashBoardPageState.set_priority,
                                                 ),
                                             ),
-                                            rx.button("Report", type_="submit"),
+                                            rx.vstack(
+                                                rx.upload(
+                                                    rx.vstack(
+                                                        rx.button(
+                                                            "Select File",
+                                                            color=color,
+                                                            bg="white",
+                                                            border=f"1px solid {color}",
+                                                        ),
+                                                        rx.text(
+                                                            "Drag and drop files here or click to select files"
+                                                        ),
+                                                    ),
+                                                    border=f"1px dotted {color}",
+                                                    padding="5em",
+                                                ),
+                                                rx.button(
+                                                    "Upload",
+                                                    on_click=lambda: DashBoardPageState.handle_upload(
+                                                        rx.upload_files()
+                                                    ),
+                                                ),
+                                                rx.foreach(
+                                                    DashBoardPageState.img,
+                                                    lambda img: rx.image(src=img),
+                                                ),
+                                                padding="5em",
+                                            ),
+                                            rx.button(
+                                                "Report",
+                                                type_="submit",
+                                            ),
                                         ),
                                         on_submit=DashBoardPageState.handle_report_bug_form_data_submit,
                                     ),
@@ -78,7 +111,9 @@ def dashboard_form():
                         rx.form(
                             rx.hstack(
                                 rx.input(
-                                    placeholder="User Email", id="email", type_="email"
+                                    placeholder="User Email",
+                                    id="email",
+                                    type_="email",
                                 ),
                                 rx.hstack(
                                     rx.select(

@@ -65,7 +65,9 @@ class SideBarState(State):
             follow_redirects=True,
         )
         print(response.json())
-        return self.check_response(response.json(), response.status_code)
+        if response.status_code == 200:
+            self.message, self.status = "Project created successfully", "success"
+            self.change_create_project_state()
 
     def get_projects(self) -> None:
         """Get projects"""
