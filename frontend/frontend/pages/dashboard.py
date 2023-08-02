@@ -4,6 +4,8 @@ from ..components.sidebar import sidebar
 from ..components.project_overview import project_overview
 from ..components.project_bugs import project_bugs
 from ..components.dashboard_form import dashboard_form
+from ..components.project_members import project_members
+from ..components.dashboard_intro import dashboard_intro
 
 
 def dashboard():
@@ -11,26 +13,24 @@ def dashboard():
     return rx.cond(
         DashBoardPageState.is_authenticated,
         rx.box(
-            rx.hstack(
+            rx.flex(
                 sidebar(),
-            ),
-            rx.cond(
-                DashBoardPageState.project_in_view_id,
                 rx.vstack(
-                    project_overview(),
-                    dashboard_form(),
-                    project_bugs(),
-                    width="80%",
-                    max_width="100%",
+                    rx.cond(
+                        DashBoardPageState.project_in_view_id,
+                        rx.box(
+                            project_overview(),
+                            dashboard_form(),
+                            project_bugs(),
+                            project_members(),
+                            width="100%",
+                        ),
+                        rx.box(dashboard_intro()),
+                    ),
+                    width="70%",
+                    max_width="70%",
                     margin_left="auto",
-                ),
-                rx.heading(
-                    "Welcome to the dashboard",
-                    size="lg",
-                    margin_top="16px",
-                    width="80%",
-                    max_width="100%",
-                    margin_left="auto",
+                    padding="1em",
                 ),
             ),
             padding="0px",

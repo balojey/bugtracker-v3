@@ -22,6 +22,7 @@ class ProjectIn(rx.Base):
 class SideBarState(State):
     """The sidebar state."""
 
+    project_members: list[dict] = []
     project_member: dict = {}
     is_admin: bool = False
     is_project_manager: bool = False
@@ -105,6 +106,22 @@ class SideBarState(State):
         print("Get bugs response: ", response.json())
         return response.json()
 
+    def get_project_members(self, project_id: str):
+        if len(self.headers["Authorization"]) < 10:
+            return rx.redirect("/login")
+        response = httpx.get(
+            f"{self.url}/projects/{project_id}/members",
+            follow_redirects=True,
+            headers=self.headers,
+        )
+        print("Get project members response: ", response.json())
+        pms = response.json()
+        for pm in pms:
+            user = pm["user"]
+            pm["email"] = user["email"]
+            pm["user"] = f"{user['first_name']} {user['last_name']}"
+        self.project_members = pms
+
     def get_user_project_member(self, project_id):
         """Get user project member"""
         if len(self.headers["Authorization"]) < 10:
@@ -114,6 +131,7 @@ class SideBarState(State):
             follow_redirects=True,
             headers=self.headers,
         )
+        self.get_project_members(project_id)
         current_user = httpx.get(
             f"{self.url}/users/me",
             follow_redirects=True,
@@ -196,4 +214,6 @@ def display_project_name(project: dict):
     return rx.text(
         project["name"],
         on_click=lambda x: SideBarState.change_project_in_view(project["_id"]),
+        cursor_="pointer",
+        padding="10px",
     )

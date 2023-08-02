@@ -68,6 +68,8 @@ class DashBoardPageState(SideBarState):
             return rx.window_alert("User with this email does not exist")
         if response.status_code == 409:
             return rx.window_alert("User is already a project member")
+        if response.status_code == 201:
+            return rx.window_alert("Role assigned")
 
     def handle_report_bug_form_data_submit(self, form_data: dict):
         """Handle report bug form data submit"""
