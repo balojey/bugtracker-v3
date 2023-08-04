@@ -8,10 +8,13 @@ def sidebar():
     return rx.vstack(
         rx.vstack(
             rx.image(src="/favicon.ico", margin="0 auto"),
-            rx.heading(
-                "Bug Tracker",
-                text_align="center",
-                margin_bottom="1em",
+            rx.link(
+                rx.heading(
+                    "Bug Tracker",
+                    text_align="center",
+                    margin_bottom="1em",
+                ),
+                href="/",
             ),
             rx.box(
                 rx.accordion(

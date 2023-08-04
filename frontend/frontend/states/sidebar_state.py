@@ -41,6 +41,25 @@ class SideBarState(State):
     in_progress_bugs_count: int = 0
     resolved_bugs_count: int = 0
     closed_bugs_count: int = 0
+    priority_colors: dict = {
+        1: "#00ff00",
+        2: "#ffff00",
+        3: "#ff9900",
+        4: "#ff0000",
+        5: "#ff0000",
+        6: "#ff0000",
+        7: "#ff0000",
+    }
+
+    priority_text: dict = {
+        1: "LOW",
+        2: "MEDIUM",
+        3: "HIGH",
+        4: "URGENT",
+        5: "IMMEDIATE",
+        6: "CRITICAL",
+        7: "BLOCKER",
+    }
 
     def handle_logout_click(self):
         """Handle the logout click event."""
@@ -195,7 +214,10 @@ class SideBarState(State):
                 ).strftime("%B %d, %Y")
                 reporter = bug["reporter"]
                 user = reporter["user"]
+                priority = bug["priority"]
+                print("=========priority: ", priority)
                 bug["reporter"] = f"{user['first_name']} {user['last_name']}"
+                bug["priority"] = self.priority_colors[priority]
                 if bug["status"] == BugStatus.NEW.value:
                     self.new_bugs_count += 1
                     self.new_bugs.append(bug)
