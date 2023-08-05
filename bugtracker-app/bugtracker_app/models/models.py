@@ -1,4 +1,3 @@
-from sqlalchemy import ForeignKeyConstraint
 from .base_model import BaseModel
 from pydantic import EmailStr
 from enumerations import *
@@ -9,14 +8,10 @@ from typing import Optional
 class User(BaseModel, table=True):
     """User model"""
 
-    first_name: str
-    last_name: str
+    name: str
+    role: Optional[Role]
     email: EmailStr
     password: str
-    projects: Optional[list["Project"]] = Relationship(back_populates="creator")
-    projects_joined: Optional[list["ProjectMember"]] = Relationship(
-        back_populates="assignee"
-    )
 
 
 class Project(BaseModel, table=True):
@@ -25,21 +20,7 @@ class Project(BaseModel, table=True):
     name: str
     description: str
     creator_id: str = Field(default=None, foreign_key="user.id")
-    creator: Optional[User] = Relationship(back_populates="projects")
     tickets: Optional[list["Ticket"]] = Relationship(back_populates="project")
-    members: Optional[list["ProjectMember"]] = Relationship(back_populates="project")
-
-
-class ProjectMember(BaseModel, table=True):
-    """Project member model"""
-
-    project_id: str = Field(default=None, foreign_key="project.id")
-    assignee_id: str = Field(default=None, foreign_key="user.id")
-    assigner_id: Optional[str] = Field(default=None, foreign_key="projectmember.id")
-    role: Role
-    project: Optional[Project] = Relationship(back_populates="members")
-    assignee: Optional[User] = Relationship(back_populates="projects_joined")
-    comments: Optional[list["Comment"]] = Relationship(back_populates="commenter")
 
 
 class Ticket(BaseModel, table=True):
@@ -47,11 +28,9 @@ class Ticket(BaseModel, table=True):
 
     title: str
     description: str
-    submitter_id: str = Field(default=None, foreign_key="projectmember.id")
+    submitter_id: str = Field(default=None, foreign_key="user.id")
     project_id: str = Field(default=None, foreign_key="project.id")
-    assigned_developer_id: Optional[str] = Field(
-        default=None, foreign_key="projectmember.id"
-    )
+    assigned_developer_id: Optional[str] = Field(default=None, foreign_key="user.id")
     ticket_type: TicketType
     priority: Priority
     status: Status
@@ -77,6 +56,7 @@ class TicketHistory(BaseModel, table=True):
     action: Action
     previous_value: str
     present_value: str
+    made_by: str = Field(default=None, foreign_key="user.id")
     ticket_id: str = Field(default=None, foreign_key="ticket.id")
     ticket: Optional[Ticket] = Relationship(back_populates="history")
 
@@ -87,5 +67,4 @@ class Comment(BaseModel, table=True):
     content: str
     ticket_id: str = Field(default=None, foreign_key="ticket.id")
     ticket: Optional[Ticket] = Relationship(back_populates="comments")
-    commenter_id: str = Field(default=None, foreign_key="projectmember.id")
-    commenter: Optional[ProjectMember] = Relationship(back_populates="comments")
+    commenter_id: str = Field(default=None, foreign_key="user.id")
