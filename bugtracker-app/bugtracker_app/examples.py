@@ -100,19 +100,19 @@ def populate():
         project_id=project1.id,
         assignee_id=user2.id,
         role=Role.DEVELOPER,
-        assigner_id=user1.id,
+        assigner_id=project_member1.id,
     )
     project_member3 = ProjectMember(
         project_id=project1.id,
         assignee_id=user3.id,
         role=Role.PROJECT_MANAGER,
-        assigner_id=user1.id,
+        assigner_id=project_member1.id,
     )
     project_member4 = ProjectMember(
         project_id=project1.id,
         assignee_id=user4.id,
         role=Role.SUBMITTER,
-        assigner_id=user1.id,
+        assigner_id=project_member1.id,
     )
 
     project_member5 = ProjectMember(
@@ -124,19 +124,19 @@ def populate():
         project_id=project2.id,
         assignee_id=user1.id,
         role=Role.DEVELOPER,
-        assigner_id=user2.id,
+        assigner_id=project_member5.id,
     )
     project_member7 = ProjectMember(
         project_id=project2.id,
         assignee_id=user3.id,
         role=Role.PROJECT_MANAGER,
-        assigner_id=user2.id,
+        assigner_id=project_member5.id,
     )
     project_member8 = ProjectMember(
         project_id=project2.id,
         assignee_id=user4.id,
         role=Role.SUBMITTER,
-        assigner_id=user2.id,
+        assigner_id=project_member5.id,
     )
 
     project_member9 = ProjectMember(
@@ -148,19 +148,19 @@ def populate():
         project_id=project3.id,
         assignee_id=user1.id,
         role=Role.DEVELOPER,
-        assigner_id=user3.id,
+        assigner_id=project_member9.id,
     )
     project_member11 = ProjectMember(
         project_id=project3.id,
         assignee_id=user2.id,
         role=Role.PROJECT_MANAGER,
-        assigner_id=user3.id,
+        assigner_id=project_member9.id,
     )
     project_member12 = ProjectMember(
         project_id=project3.id,
         assignee_id=user4.id,
         role=Role.SUBMITTER,
-        assigner_id=user3.id,
+        assigner_id=project_member9.id,
     )
 
     project_member13 = ProjectMember(
@@ -172,19 +172,19 @@ def populate():
         project_id=project4.id,
         assignee_id=user1.id,
         role=Role.DEVELOPER,
-        assigner_id=user4.id,
+        assigner_id=project_member13.id,
     )
     project_member15 = ProjectMember(
         project_id=project4.id,
         assignee_id=user2.id,
         role=Role.PROJECT_MANAGER,
-        assigner_id=user4.id,
+        assigner_id=project_member13.id,
     )
     project_member16 = ProjectMember(
         project_id=project4.id,
         assignee_id=user3.id,
         role=Role.SUBMITTER,
-        assigner_id=user4.id,
+        assigner_id=project_member13.id,
     )
     print(
         project_member1,
