@@ -1,8 +1,8 @@
 from enum import Enum
 
 
-class Changes(str, Enum):
-    """Changes enumeration."""
+class Action(str, Enum):
+    """Action enumeration."""
 
     TITLE_CHANGE = "TITLE CHANGE"
     DESCRIPTION_CHANGE = "DESCRIPTION CHANGE"
