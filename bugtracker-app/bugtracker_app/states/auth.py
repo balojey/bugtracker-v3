@@ -2,6 +2,8 @@ import reflex as rx
 from ..models import User
 from .base import State
 from pydantic import EmailStr
+from ..enumerations import Role
+from typing import Optional
 
 
 class AuthState(State):
@@ -11,6 +13,7 @@ class AuthState(State):
     email: EmailStr = ""
     password: str = ""
     confirm_password: str = ""
+    role: Optional[Role]
 
     def signup(self):
         """Signup user"""
@@ -31,5 +34,7 @@ class AuthState(State):
             user = session.query(User).where(User.email == self.email).one_or_none()
             if user and user.password == self.password:
                 self.user = user
+                self.name = user.name
+                self.role = user.role
                 return rx.redirect("/dashboard")
             return rx.window_alert("Invalid credentials")
