@@ -5,6 +5,17 @@ from sqlmodel import Field, Relationship
 from typing import Optional
 
 
+class UserProject(BaseModel, table=True):
+    """User project model"""
+
+    user_id: Optional[str] = Field(
+        default=None, foreign_key="user.id", primary_key=True
+    )
+    project_id: Optional[str] = Field(
+        default=None, foreign_key="project.id", primary_key=True
+    )
+
+
 class User(BaseModel, table=True):
     """User model"""
 
@@ -13,7 +24,7 @@ class User(BaseModel, table=True):
     email: EmailStr
     password: str
     projects: Optional[list["Project"]] = Relationship(
-        back_populates="members", link_model="UserProject"
+        back_populates="members", link_model=UserProject
     )
 
 
@@ -25,15 +36,8 @@ class Project(BaseModel, table=True):
     creator_id: str = Field(default=None, foreign_key="user.id")
     tickets: Optional[list["Ticket"]] = Relationship(back_populates="project")
     members: Optional[list["User"]] = Relationship(
-        back_populates="projects", link_model="UserProject"
+        back_populates="projects", link_model=UserProject
     )
-
-
-class UserProject(BaseModel, table=True):
-    """User project model"""
-
-    user_id: str = Field(default=None, foreign_key="user.id", primary_key=True)
-    project_id: str = Field(default=None, foreign_key="project.id", primary_key=True)
 
 
 class Ticket(BaseModel, table=True):
