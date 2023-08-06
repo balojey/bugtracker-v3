@@ -233,13 +233,13 @@ def populate():
     }
 
     with Session(engine) as session:
-        # create_db_and_tables()
+        create_db_and_tables()
 
-        user = session.query(User).where(User.name == "DemoAdmin2").one()
-        user.role = Role.ASSIGNED_ADMIN
-        session.add(user)
-        session.commit()
-        session.refresh(user)
+        # user = session.query(User).where(User.name == "DemoAdmin2").one()
+        # user.role = Role.ASSIGNED_ADMIN
+        # session.add(user)
+        # session.commit()
+        # session.refresh(user)
 
         # Create ticket histories
         # print("Creating ticket histories...")
@@ -305,6 +305,17 @@ def populate():
         #     )
         #     session.add(ticket)
         #     session.commit()
+
+        # Add members to projects
+        # projects = session.query(Project).all()
+        # users = session.query(User).where(User.role != Role.ADMIN).all()
+        # for project in projects:
+        #     print("Project memers:", project.members)
+        #     for user in users:
+        #         project.members.append(user)
+        #     session.add(project)
+        #     session.commit()
+        #     session.refresh(project)
 
         # demoadmin1 = session.query(User).where(User.name == "DemoAdmin1").one()
 
