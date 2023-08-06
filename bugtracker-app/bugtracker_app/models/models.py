@@ -12,6 +12,9 @@ class User(BaseModel, table=True):
     role: Optional[Role]
     email: EmailStr
     password: str
+    projects: Optional[list["Project"]] = Relationship(
+        back_populates="members", link_model="UserProject"
+    )
 
 
 class Project(BaseModel, table=True):
@@ -21,6 +24,16 @@ class Project(BaseModel, table=True):
     description: str
     creator_id: str = Field(default=None, foreign_key="user.id")
     tickets: Optional[list["Ticket"]] = Relationship(back_populates="project")
+    members: Optional[list["User"]] = Relationship(
+        back_populates="projects", link_model="UserProject"
+    )
+
+
+class UserProject(BaseModel, table=True):
+    """User project model"""
+
+    user_id: str = Field(default=None, foreign_key="user.id", primary_key=True)
+    project_id: str = Field(default=None, foreign_key="project.id", primary_key=True)
 
 
 class Ticket(BaseModel, table=True):
