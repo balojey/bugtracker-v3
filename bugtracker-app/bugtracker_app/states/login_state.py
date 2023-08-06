@@ -4,7 +4,7 @@ from .auth import AuthState
 class LoginState(AuthState):
     """Login state of the bugtracker app."""
 
-    def login_as_demo_user(self, user):
+    def login_as_demo_user(self, user: str):
         """Handle login as demo admin 1."""
         # Define demo_users
         demo_users = {
@@ -33,4 +33,9 @@ class LoginState(AuthState):
             demo_users[user]["email"],
             demo_users[user]["password"],
         )
+        return self.login()
+
+    def handle_user_login(self, form_data: dict):
+        """Handle user login."""
+        self.email, self.password = form_data["email"], form_data["password"]
         return self.login()

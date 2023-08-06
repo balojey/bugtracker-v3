@@ -1,6 +1,6 @@
 from .base_model import BaseModel
 from pydantic import EmailStr
-from enumerations import *
+from ..enumerations import *
 from sqlmodel import Field, Relationship
 from typing import Optional
 

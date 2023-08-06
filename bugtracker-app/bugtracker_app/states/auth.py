@@ -36,5 +36,5 @@ class AuthState(State):
                 self.user = user
                 self.name = user.name
                 self.role = user.role
-                return rx.redirect("/dashboard")
+                return rx.redirect("/")
             return rx.window_alert("Invalid credentials")
