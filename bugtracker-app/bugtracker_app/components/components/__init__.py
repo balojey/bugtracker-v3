@@ -4,3 +4,4 @@ from .header import header
 from .sidebar import sidebar
 from .dashboard_charts import dashboard_charts
 from .home_header import home_header
+from .base_layout import base_layout
