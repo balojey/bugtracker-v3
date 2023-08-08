@@ -1,6 +1,6 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 from .styles import styles
-from .pages import login_page, dashboard
+from .pages import login_page, dashboard, manage_project_users
 from .states import State, DashBoardState
 from .components.components import home_header
 
@@ -30,4 +30,5 @@ app = rx.App(state=State, style=styles, stylesheets=["fonts/tenor_sans.css"])
 app.add_page(index)
 app.add_page(login_page, route="/login")
 app.add_page(dashboard, route="/dashboard", on_load=DashBoardState.prepare_dashboard())
+app.add_page(manage_project_users, route="/manage-project-users", on_load=State.check_login())
 app.compile()
