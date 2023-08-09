@@ -19,7 +19,7 @@ class UserProject(BaseModel, table=True):
 class User(BaseModel, table=True):
     """User model"""
 
-    name: str
+    full_name: str
     role: Optional[Role]
     email: EmailStr
     password: str
@@ -31,7 +31,7 @@ class User(BaseModel, table=True):
 class Project(BaseModel, table=True):
     """Project model"""
 
-    name: str
+    title: str
     description: str
     creator_id: str = Field(default=None, foreign_key="user.id")
     tickets: Optional[list["Ticket"]] = Relationship(back_populates="project")

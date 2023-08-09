@@ -7,6 +7,7 @@ styles = {
         "display": "grid",
         "gap": "4em 0",
         "grid_template_columns": "20% auto",
+        "grid_template_rows": "auto 1fr",
         "max_height": "100vh",
         "min_height": "100vh",
         "max_width": "100%",

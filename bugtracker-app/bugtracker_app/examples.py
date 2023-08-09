@@ -142,19 +142,19 @@ def populate():
     ]
     projects = {
         "project1": {
-            "name": "Bug tracker",
+            "title": "Bug tracker",
             "description": "help teams keep track of bugs",
         },
         "project2": {
-            "name": "Trek with me",
+            "title": "Trek with me",
             "description": "help people find hiking partners",
         },
         "project3": {
-            "name": "Course chat room",
+            "title": "Course chat room",
             "description": "help students in a course chat with each other",
         },
         "project4": {
-            "name": "School management system",
+            "title": "School management system",
             "description": "help schools manage their students",
         },
     }
@@ -235,106 +235,106 @@ def populate():
     with Session(engine) as session:
         create_db_and_tables()
 
-        # user = session.query(User).where(User.name == "DemoAdmin2").one()
-        # user.role = Role.ASSIGNED_ADMIN
-        # session.add(user)
-        # session.commit()
-        # session.refresh(user)
+        for name, email, password, role in zip(names, emails, passwords, role):
+            user = User(
+                full_name=name,
+                email=email,
+                password=password,
+                role=role,
+            )
+            session.add(user)
+            session.commit()
 
-        # Create ticket histories
-        # print("Creating ticket histories...")
-        # tickets = session.query(Ticket).all()
-        # developers = session.query(User).where(User.role == Role.DEVELOPER).all()
-        # admin = session.query(User).where(User.role == Role.ADMIN).first()
-        # i = 0
-        # for ticket in tickets:
-        #     previous_value = ticket.assigned_developer_id if ticket.assigned_developer_id else ""
-        #     ticket.assigned_developer_id = developers[i % len(developers)].id
-        #     present_value = developers[i % len(developers)].id
-        #     ticket_history = TicketHistory(
-        #         action=Action.ASSIGNED_DEVELOPER_CHANGE,
-        #         previous_value=previous_value,
-        #         present_value=present_value,
-        #         ticket_id=ticket.id,
-        #         made_by=admin.id,
-        #     )
-        #     session.add(ticket_history)
-        #     session.add(ticket)
-        #     session.commit()
-        #     session.refresh(ticket)
+        demoadmin1 = session.query(User).where(User.full_name == "DemoAdmin1").one()
 
-        # Create comments
-        # print("Creating comments...")
-        # tickets = session.query(Ticket).all()
-        # users = session.query(User).all()
-        # i = 0
-        # for user in users:
-        #     comment = Comment(
-        #         content="This is a comment",
-        #         commenter_id=user.id,
-        #         ticket_id=tickets[i % len(tickets)].id,
-        #     )
-        #     session.add(comment)
-        #     session.commit()
-        #     i += 1
-
-        # Create attachments
-        # print("Creating attachments...")
-        # tickets = session.query(Ticket).all()
-        # for ticket in tickets:
-        #     attachment = Attachment(
-        #         ticket_id=ticket.id,
-        #         description="This is a file description",
-        #         file_name="bug_tracker.py",
-        #         file_path="/home/bug_tracker.py",
-        #     )
-        #     session.add(attachment)
-        #     session.commit()
-
-        # Create tickets
-        # print("Creating tickets...")
-        # submitters = session.query(User).where(User.role == Role.SUBMITTER).all()
-        # projects = session.query(Project).all()
-        # i = 0
-        # for ticket in tickets.values():
-        #     i += 1
-        #     ticket = Ticket(
-        #         **ticket,
-        #         submitter_id=submitters[i % len(submitters)].id,
-        #         project_id=projects[i % len(projects)].id,
-        #     )
-        #     session.add(ticket)
-        #     session.commit()
+        # Create projects
+        print("Creating projects...")
+        for project in projects.values():
+            project = Project(**project, creator_id=demoadmin1.id)
+            session.add(project)
+            session.commit()
 
         # Add members to projects
-        # projects = session.query(Project).all()
-        # users = session.query(User).where(User.role != Role.ADMIN).all()
-        # for project in projects:
-        #     print("Project memers:", project.members)
-        #     for user in users:
-        #         project.members.append(user)
-        #     session.add(project)
-        #     session.commit()
-        #     session.refresh(project)
+        projects = session.query(Project).all()
+        users = session.query(User).where(User.role != Role.ADMIN).all()
+        for project in projects:
+            print("Project memers:", project.members)
+            for user in users:
+                project.members.append(user)
+            session.add(project)
+            session.commit()
+            session.refresh(project)
 
-        # demoadmin1 = session.query(User).where(User.name == "DemoAdmin1").one()
+        # Create tickets
+        print("Creating tickets...")
+        submitters = session.query(User).where(User.role == Role.SUBMITTER).all()
+        projects = session.query(Project).all()
+        i = 0
+        for ticket in tickets.values():
+            i += 1
+            ticket = Ticket(
+                **ticket,
+                submitter_id=submitters[i % len(submitters)].id,
+                project_id=projects[i % len(projects)].id,
+            )
+            session.add(ticket)
+            session.commit()
 
-        # # Create projects
-        # print("Creating projects...")
-        # for project in projects.values():
-        #     project = Project(**project, creator_id=demoadmin1.id)
-        #     session.add(project)
-        #     session.commit()
+        # Create attachments
+        print("Creating attachments...")
+        tickets = session.query(Ticket).all()
+        for ticket in tickets:
+            attachment = Attachment(
+                ticket_id=ticket.id,
+                description="This is a file description",
+                file_name="bug_tracker.py",
+                file_path="/home/bug_tracker.py",
+            )
+            session.add(attachment)
+            session.commit()
 
-        # for name, email, password, role in zip(names, emails, passwords, role):
-        #     user = User(
-        #         name=name,
-        #         email=email,
-        #         password=password,
-        #         role=role,
-        #     )
-        #     session.add(user)
-        #     session.commit()
+        # Create comments
+        print("Creating comments...")
+        tickets = session.query(Ticket).all()
+        users = session.query(User).all()
+        i = 0
+        for user in users:
+            comment = Comment(
+                content="This is a comment",
+                commenter_id=user.id,
+                ticket_id=tickets[i % len(tickets)].id,
+            )
+            session.add(comment)
+            session.commit()
+            i += 1
+
+        # Create ticket histories
+        print("Creating ticket histories...")
+        tickets = session.query(Ticket).all()
+        developers = session.query(User).where(User.role == Role.DEVELOPER).all()
+        admin = session.query(User).where(User.role == Role.ADMIN).first()
+        i = 0
+        for ticket in tickets:
+            previous_value = ticket.assigned_developer_id if ticket.assigned_developer_id else ""
+            ticket.assigned_developer_id = developers[i % len(developers)].id
+            present_value = developers[i % len(developers)].id
+            ticket_history = TicketHistory(
+                action=Action.ASSIGNED_DEVELOPER_CHANGE,
+                previous_value=previous_value,
+                present_value=present_value,
+                ticket_id=ticket.id,
+                made_by=admin.id,
+            )
+            session.add(ticket_history)
+            session.add(ticket)
+            session.commit()
+            session.refresh(ticket)
+
+        user = session.query(User).where(User.full_name == "DemoAdmin2").one()
+        user.role = Role.ASSIGNED_ADMIN
+        session.add(user)
+        session.commit()
+        session.refresh(user)
 
 
 if __name__ == "__main__":

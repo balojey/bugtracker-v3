@@ -16,7 +16,7 @@ links = [
     rx.link(
         rx.icon(tag="link"),
         "Manage Project Users",
-        href="/dashboard",
+        href="/manage-project-users",
         padding="1em",
         width="100%",
     ),
