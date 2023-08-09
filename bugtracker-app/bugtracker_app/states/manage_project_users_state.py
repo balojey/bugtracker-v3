@@ -6,6 +6,8 @@ import reflex as rx
 class ManageProjectUsersState(State):
     """Manage project users state"""
 
+    project_members: list[User] = []
+
     def handle_add_user(self, project_id: str, user_id: str):
         """Handle add user"""
         with rx.session() as session:
@@ -27,14 +29,14 @@ class ManageProjectUsersState(State):
             session.refresh(project)
 
     @rx.var
-    def projects(self):
+    def projects(self) -> list[Project]:
         """Get projects"""
         with rx.session() as session:
             return session.query(Project).all()
 
-    @rx.var
-    def members(self, project_id: str):
+    def get_members(self, project_id: str) -> list[User]:
         """Get members"""
+        self.project_members = []
         with rx.session() as session:
             project = session.query(Project).get(project_id)
-            return project.members
+            self.project_members = project.members

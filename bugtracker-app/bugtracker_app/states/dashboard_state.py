@@ -75,7 +75,7 @@ class DashBoardState(State):
             submitters_ids = list(set(submitters_ids))
             for submitter_id in submitters_ids:
                 self.ticket_submitters.append(
-                    session.query(User).where(User.id == submitter_id[0]).first().name
+                    session.query(User).where(User.id == submitter_id[0]).first().full_name
                 )
                 self.ticket_submitters_values.append(
                     session.query(Ticket)

@@ -1,11 +1,11 @@
-from ..components.components import demo_user_login, user_login, header
+from ..components.components import demo_user_login, user_login, home_header
 import reflex as rx
 
 
 def login_page() -> rx.Component:
     """Login Page"""
     return rx.box(
-        header(),
+        home_header(),
         rx.heading("Login", size="lg"),
         rx.responsive_grid(
             user_login(flex_grow="1", padding_x="1em",),

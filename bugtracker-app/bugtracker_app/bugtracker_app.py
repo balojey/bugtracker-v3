@@ -15,6 +15,10 @@ def index() -> rx.Component:
                 "Dashboard",
                 href="/dashboard",
             ),
+            rx.link(
+                "Manage project users",
+                href="/manage-project-users",
+            ),
         ),
         display="flex",
         justify_content="center",
@@ -30,5 +34,7 @@ app = rx.App(state=State, style=styles, stylesheets=["fonts/tenor_sans.css"])
 app.add_page(index)
 app.add_page(login_page, route="/login")
 app.add_page(dashboard, route="/dashboard", on_load=DashBoardState.prepare_dashboard())
-app.add_page(manage_project_users, route="/manage-project-users", on_load=State.check_login())
+app.add_page(
+    manage_project_users, route="/manage-project-users", on_load=State.check_login()
+)
 app.compile()

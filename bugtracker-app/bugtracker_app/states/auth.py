@@ -15,6 +15,26 @@ class AuthState(State):
     confirm_password: str = ""
     role: Optional[Role]
 
+    @rx.var
+    def is_admin(self):
+        """Check if user is admin"""
+        return self.role == Role.ADMIN
+
+    @rx.var
+    def is_project_manager(self):
+        """Check if user is project manager"""
+        return self.role == Role.PROJECT_MANAGER
+
+    @rx.var
+    def is_developer(self):
+        """Check if user is developer"""
+        return self.role == Role.DEVELOPER
+
+    @rx.var
+    def is_submitter(self):
+        """Check if user is submitter"""
+        return self.role == Role.SUBMITTER
+
     def signup(self):
         """Signup user"""
         if self.password != self.confirm_password:
@@ -34,7 +54,7 @@ class AuthState(State):
             user = session.query(User).where(User.email == self.email).one_or_none()
             if user and user.password == self.password:
                 self.user = user
-                self.name = user.name
+                self.name = user.full_name
                 self.role = user.role
                 return rx.redirect("/")
             return rx.window_alert("Invalid credentials")

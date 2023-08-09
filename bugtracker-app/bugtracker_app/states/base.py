@@ -9,26 +9,6 @@ class State(rx.State):
 
     user: Optional[User] = None
 
-    @rx.var
-    def is_admin(self):
-        """Check if user is admin"""
-        return self.user.role == Role.ADMIN
-
-    @rx.var
-    def is_project_manager(self):
-        """Check if user is project manager"""
-        return self.user.role == Role.PROJECT_MANAGER
-
-    @rx.var
-    def is_developer(self):
-        """Check if user is developer"""
-        return self.user.role == Role.DEVELOPER
-
-    @rx.var
-    def is_submitter(self):
-        """Check if user is submitter"""
-        return self.user.role == Role.SUBMITTER
-
     def logout(self):
         """Logout user"""
         self.reset()
