@@ -8,4 +8,5 @@ def view_and_remove_members(**props):
 
     return rx.box(
         rx.foreach(ManageProjectUsersState.projects, view_project),
+        width="100%",
     )

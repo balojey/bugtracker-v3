@@ -13,10 +13,10 @@ def view_project(project, **props):
             rx.accordion_button(
                 rx.accordion_icon(),
                 rx.heading(project.title, size="md"),
-                # on_click=lambda: ManageProjectUsersState.get_members(project.id),
+                on_click=lambda: ManageProjectUsersState.get_members(project.id),
             ),
             rx.accordion_panel(
-                # rx.foreach(project.members, view_member)
+                rx.foreach(ManageProjectUsersState.project_members_in_view, view_member)
             ),
         ),
         width="100%",

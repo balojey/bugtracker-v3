@@ -29,15 +29,24 @@ class ManageProjectUsersState(State):
     selected_project_option: str = None
     selected_user_option: str = None
 
-    def handle_remove_user(self, project_id: str, user_id: str):
+    # For viewing and removing users
+    project_members_in_view: list[User] = []
+    project_in_view: str = None
+
+    def handle_remove_user(self, user_id: str):
         """Handle remove user"""
         with rx.session() as session:
-            project = session.query(Project).get(project_id)
+            project = session.query(Project).get(self.project_in_view)
             user = session.query(User).get(user_id)
             project.members.remove(user)
             session.add(project)
             session.commit()
             session.refresh(project)
+
+            for member in self.project_members_in_view:
+                if member.id == user.id:
+                    self.project_members_in_view.remove(member)
+                    break
 
     @rx.var
     def projects(self) -> list[ProjectSchema]:
@@ -48,12 +57,14 @@ class ManageProjectUsersState(State):
                 project.members = project.members
         return projects
 
-    def get_members(self, project_id: str) -> list[User]:
-        """Get members"""
-        self.project_members = []
+    def get_members(self, project_id: str):
+        """Get project members"""
+        self.project_members_in_view = []
+        self.project_in_view = project_id
         with rx.session() as session:
             project = session.query(Project).get(project_id)
-            self.project_members = project.members
+            self.project_members_in_view = project.members
+        print(self.project_members_in_view)
 
     @rx.var
     def project_options(self) -> list:
