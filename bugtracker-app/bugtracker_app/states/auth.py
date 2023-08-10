@@ -21,6 +21,11 @@ class AuthState(State):
         return self.role == Role.ADMIN
 
     @rx.var
+    def is_assigned_admin(self):
+        """Check if user is assigned admin"""
+        return self.role == Role.ASSIGNED_ADMIN
+
+    @rx.var
     def is_project_manager(self):
         """Check if user is project manager"""
         return self.role == Role.PROJECT_MANAGER

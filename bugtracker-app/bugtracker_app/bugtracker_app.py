@@ -1,7 +1,13 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 from .styles import styles
-from .pages import login_page, dashboard, manage_project_users
-from .states import State, DashBoardState
+from .pages import (
+    login_page,
+    dashboard,
+    manage_project_users,
+    my_projects,
+    project_details,
+)
+from .states import State, DashBoardState, ProjectDetailsState
 from .components.components import home_header
 
 import reflex as rx
@@ -18,6 +24,10 @@ def index() -> rx.Component:
             rx.link(
                 "Manage project users",
                 href="/manage-project-users",
+            ),
+            rx.link(
+                "My projects",
+                href="/my-projects",
             ),
         ),
         display="flex",
@@ -36,5 +46,11 @@ app.add_page(login_page, route="/login")
 app.add_page(dashboard, route="/dashboard", on_load=DashBoardState.prepare_dashboard())
 app.add_page(
     manage_project_users, route="/manage-project-users", on_load=State.check_login()
+)
+app.add_page(my_projects, route="/my-projects", on_load=State.check_login())
+app.add_page(
+    project_details,
+    route="/my-projects/details",
+    on_load=ProjectDetailsState.get_project_details(),
 )
 app.compile()

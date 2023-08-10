@@ -17,6 +17,7 @@ def header(**props) -> rx.Component:
             ),
             rx.cond(AuthState.logged_in, rx.text("Logged in as: ", AuthState.name)),
             margin_left="2em",
+            # align_items="baseline",
         ),
         rx.hstack(
             rx.color_mode_button(rx.color_mode_icon()),
