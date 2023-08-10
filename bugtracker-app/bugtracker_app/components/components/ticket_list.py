@@ -30,7 +30,7 @@ def ticket_list(**props) -> rx.Component:
                         rx.td(
                             rx.link(
                                 "More details",
-                                href="/ticket-details",
+                                href="/my-projects/details/ticket",
                                 on_click=lambda: ProjectDetailsState.set_ticket_id(
                                     ticket.id
                                 ),

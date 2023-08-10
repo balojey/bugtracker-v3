@@ -28,7 +28,7 @@ def index() -> rx.Component:
             ),
             rx.link(
                 "My projects",
-                href="/my-projects",
+                href="/projects",
             ),
         ),
         display="flex",
@@ -48,13 +48,13 @@ app.add_page(dashboard, route="/dashboard", on_load=DashBoardState.prepare_dashb
 app.add_page(
     manage_project_users, route="/manage-project-users", on_load=State.check_login()
 )
-app.add_page(my_projects, route="/my-projects", on_load=State.check_login())
+app.add_page(my_projects, route="/projects", on_load=State.check_login())
 app.add_page(
     project_details,
-    route="/my-projects/details",
+    route="/projects/details",
     on_load=ProjectDetailsState.get_project_details(),
 )
 app.add_page(
-    ticket_details, route="/my-projects/details/ticket", on_load=State.check_login()
+    ticket_details, route="/projects/details/ticket", on_load=State.check_login()
 )
 app.compile()
