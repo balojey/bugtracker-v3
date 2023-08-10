@@ -8,3 +8,6 @@ from .base_layout import base_layout
 from .view_and_remove_members import view_and_remove_members
 from .add_members_to_projects import add_members_to_projects
 from .project_row import project_row
+from .ticket_list import ticket_list
+from .assigned_members import assigned_members
+from .project_details_heading import project_details_heading
