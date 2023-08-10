@@ -6,6 +6,7 @@ from .pages import (
     manage_project_users,
     my_projects,
     project_details,
+    ticket_details,
 )
 from .states import State, DashBoardState, ProjectDetailsState
 from .components.components import home_header
@@ -52,5 +53,8 @@ app.add_page(
     project_details,
     route="/my-projects/details",
     on_load=ProjectDetailsState.get_project_details(),
+)
+app.add_page(
+    ticket_details, route="/my-projects/details/ticket", on_load=State.check_login()
 )
 app.compile()

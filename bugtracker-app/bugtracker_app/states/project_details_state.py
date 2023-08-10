@@ -8,6 +8,7 @@ from ..enumerations import TicketType, Priority, Status
 class TicketOut(rx.Base):
     """Ticket out."""
 
+    id: str
     title: str
     submitter: Member
     assigned_developer: Member
@@ -23,6 +24,8 @@ class ProjectDetailsState(MyProjectState):
     title: str = ""
     description: str = ""
     members: list[User] = []
+
+    ticket_id: str = ""
 
     def get_project_details(self) -> Project:
         """Project."""
@@ -45,3 +48,8 @@ class ProjectDetailsState(MyProjectState):
                     ticket.assigned_developer_id
                 )
             return tickets
+
+    def set_ticket_id(self, ticket_id: str):
+        """Set ticket in view"""
+        self.ticket_id = ticket_id
+        print(self.ticket_id)

@@ -27,7 +27,15 @@ def ticket_list(**props) -> rx.Component:
                         rx.td(ticket.status),
                         rx.td(ticket.assigned_developer.full_name),
                         rx.td(ticket.created_at),
-                        rx.td(rx.link("More details", href="/ticket-details")),
+                        rx.td(
+                            rx.link(
+                                "More details",
+                                href="/ticket-details",
+                                on_click=lambda: ProjectDetailsState.set_ticket_id(
+                                    ticket.id
+                                ),
+                            )
+                        ),
                     ),
                 ),
             ),
