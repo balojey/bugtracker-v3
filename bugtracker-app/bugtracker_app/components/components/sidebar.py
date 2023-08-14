@@ -23,7 +23,7 @@ links = [
     rx.link(
         rx.icon(tag="link"),
         "My Projects",
-        href="/my-projects",
+        href="/projects",
         padding="1em",
         width="100%",
     ),

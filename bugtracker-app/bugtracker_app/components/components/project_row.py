@@ -31,7 +31,7 @@ def project_row(project, **props):
                 rx.list_item(
                     rx.link(
                         "Details",
-                        href="/my-projects/details",
+                        href="/projects/details",
                         on_click=MyProjectState.set_project_id(project.id),
                     )
                 ),

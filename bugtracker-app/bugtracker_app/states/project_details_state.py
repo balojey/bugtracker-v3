@@ -52,4 +52,3 @@ class ProjectDetailsState(MyProjectState):
     def set_ticket_id(self, ticket_id: str):
         """Set ticket in view"""
         self.ticket_id = ticket_id
-        print(self.ticket_id)

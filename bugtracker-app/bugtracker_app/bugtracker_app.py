@@ -8,7 +8,7 @@ from .pages import (
     project_details,
     ticket_details,
 )
-from .states import State, DashBoardState, ProjectDetailsState
+from .states import State, DashBoardState, ProjectDetailsState, ProjectTicketState
 from .components.components import home_header
 
 import reflex as rx
@@ -55,6 +55,8 @@ app.add_page(
     on_load=ProjectDetailsState.get_project_details(),
 )
 app.add_page(
-    ticket_details, route="/projects/details/ticket", on_load=State.check_login()
+    ticket_details,
+    route="/projects/details/ticket",
+    on_load=ProjectTicketState.get_ticket_details(),
 )
 app.compile()
