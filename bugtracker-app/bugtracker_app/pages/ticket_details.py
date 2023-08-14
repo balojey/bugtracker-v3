@@ -84,7 +84,42 @@ def ticket_core_details(**props) -> rx.Component:
 
 def comment_section(**props) -> rx.Component:
     """Add and read comments"""
-    return rx.text("Add and read comments")
+
+    return rx.box(
+        rx.heading("Add a comment", size="md"),
+        rx.form(
+            rx.text_area(
+                placeholder="Add a comment",
+                rows=5,
+                cols=50,
+            ),
+            rx.button("Add", type_="submit"),
+            display="flex",
+            align_items="baseline",
+        ),
+        rx.heading("Comments", size="md"),
+        rx.text("All comments from this ticket"),
+        rx.table(
+            rx.thead(
+                rx.tr(
+                    rx.th("Commenter"),
+                    rx.th("Message"),
+                    rx.th("Commented on"),
+                ),
+            ),
+            rx.tbody(
+                rx.foreach(
+                    ProjectTicketState.comments,
+                    lambda comment: rx.tr(
+                        rx.td(comment.commenter.full_name),
+                        rx.td(comment.content),
+                        rx.td(comment.created_at),
+                    ),
+                ),
+            ),
+        ),
+        **props,
+    )
 
 
 def ticket_history(**props) -> rx.Component:

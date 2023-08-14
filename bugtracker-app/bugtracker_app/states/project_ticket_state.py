@@ -4,7 +4,7 @@ from ..models import Ticket, Project
 from .schemas import AttachmentOut, TicketHistoryOut, CommentOut
 from ..enumerations import TicketType, Priority, Status
 from .manage_project_users_state import Member
-from ..models import User
+from ..models import User, Comment
 
 
 class ProjectTicketState(ProjectDetailsState):
@@ -37,14 +37,20 @@ class ProjectTicketState(ProjectDetailsState):
             self.ticket_priority = ticket.priority
             self.ticket_ticket_type = ticket.ticket_type
             self.ticket_status = ticket.status
-            self.ticket_assigned_developer = session.query(User).get(
-                ticket.assigned_developer_id
-            ).full_name
-            self.ticket_submitter = session.query(User).get(ticket.submitter_id).full_name
-            print(self.ticket_submitter, self.ticket_assigned_developer)
+            self.ticket_assigned_developer = (
+                session.query(User).get(ticket.assigned_developer_id).full_name
+            )
+            self.ticket_submitter = (
+                session.query(User).get(ticket.submitter_id).full_name
+            )
             self.attachments = ticket.attachments
             self.history = ticket.history
-            self.comments = ticket.comments
+            comments = ticket.comments
+            for comment in comments:
+                comment.commenter = (
+                    session.query(User).where(User.id == comment.commenter_id).first()
+                )
+            self.comments = comments
             self.ticket_created_at = ticket.created_at
             self.ticket_project = session.query(Project).get(ticket.project_id).title
             if ticket.created_at != ticket.updated_at:

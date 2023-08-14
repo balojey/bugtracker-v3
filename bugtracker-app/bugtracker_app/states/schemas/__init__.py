@@ -25,3 +25,4 @@ class CommentOut(rx.Base):
 
     content: str
     commenter: Member
+    created_at: str
