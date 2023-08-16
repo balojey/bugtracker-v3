@@ -17,7 +17,7 @@ class TicketHistoryOut(rx.Base):
     action: Action
     previous_value: str
     present_value: str
-    made_by: Member
+    created_at: str
 
 
 class CommentOut(rx.Base):

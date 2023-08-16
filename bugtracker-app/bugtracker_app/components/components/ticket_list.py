@@ -40,6 +40,5 @@ def ticket_list(**props) -> rx.Component:
                 ),
             ),
         ),
-        width="100%",
         **props,
     )

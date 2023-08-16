@@ -2,9 +2,9 @@ import reflex as rx
 from ..states import ProjectDetailsState
 from ..models import Ticket, Project
 from .schemas import AttachmentOut, TicketHistoryOut, CommentOut
-from ..enumerations import TicketType, Priority, Status
+from ..enumerations import TicketType, Priority, Status, Action
 from .manage_project_users_state import Member
-from ..models import User, Comment
+from ..models import User, TicketHistory
 
 
 class ProjectTicketState(ProjectDetailsState):
@@ -55,3 +55,25 @@ class ProjectTicketState(ProjectDetailsState):
             self.ticket_project = session.query(Project).get(ticket.project_id).title
             if ticket.created_at != ticket.updated_at:
                 self.ticket_updated_at = ticket.updated_at
+
+    @rx.var
+    def get_history(self) -> list[TicketHistoryOut]:
+        """Get ticket history"""
+
+        with rx.session() as session:
+            history = (
+                session.query(TicketHistory)
+                .where(TicketHistory.ticket_id == self.ticket_id)
+                .all()
+            )
+            for item in history:
+                if item.action == Action.ASSIGNED_DEVELOPER_CHANGE:
+                    if item.previous_value:
+                        item.previous_value = (
+                            session.query(User).get(item.previous_value).full_name
+                        )
+                    if item.present_value:
+                        item.present_value = (
+                            session.query(User).get(item.present_value).full_name
+                        )
+        return history

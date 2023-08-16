@@ -21,64 +21,81 @@ def ticket_core_details(**props) -> rx.Component:
             ),
         ),
         rx.box(
-            rx.hstack(
-                rx.vstack(
-                    rx.heading("TICKET TYPE", size="sm"),
-                    rx.text(ProjectTicketState.ticket_ticket_type),
+            rx.table(
+                rx.thead(
+                    rx.tr(
+                        rx.th("TICKET TITLE"),
+                        rx.th("DESCRIPTION"),
+                    )
                 ),
-                rx.vstack(
-                    rx.heading("DESCRIPTION", size="sm"),
-                    rx.text(ProjectTicketState.ticket_description),
+                rx.tbody(
+                    rx.tr(
+                        rx.td(ProjectTicketState.ticket_title),
+                        rx.td(ProjectTicketState.ticket_description),
+                    )
                 ),
-                justify="space-between",
             ),
-            rx.hstack(
-                rx.vstack(
-                    rx.heading("ASSIGNED DEVELOPER", size="sm"),
-                    rx.text(ProjectTicketState.ticket_assigned_developer.full_name),
+            rx.table(
+                rx.thead(
+                    rx.tr(
+                        rx.th("ASSIGNED DEVELOPER"),
+                        rx.th("SUBMITTER"),
+                    )
                 ),
-                rx.vstack(
-                    rx.heading("SUBMITTER", size="sm"),
-                    rx.text(ProjectTicketState.ticket_submitter.full_name),
+                rx.tbody(
+                    rx.tr(
+                        rx.td(""),
+                        rx.td(""),
+                    )
                 ),
-                justify="space-between",
             ),
-            rx.hstack(
-                rx.vstack(
-                    rx.heading("PROJECT", size="sm"),
-                    rx.text(ProjectTicketState.ticket_project),
+            rx.table(
+                rx.thead(
+                    rx.tr(
+                        rx.th("PROJECT"),
+                        rx.th("TICKET PRIORITY"),
+                    )
                 ),
-                rx.vstack(
-                    rx.heading("PRIORITY", size="sm"),
-                    rx.text(ProjectTicketState.ticket_priority),
+                rx.tbody(
+                    rx.tr(
+                        rx.td(ProjectTicketState.ticket_project),
+                        rx.td(ProjectTicketState.ticket_priority),
+                    )
                 ),
-                justify="space-between",
             ),
-            rx.hstack(
-                rx.vstack(
-                    rx.heading("STATUS", size="sm"),
-                    rx.text(ProjectTicketState.ticket_status),
+            rx.table(
+                rx.thead(
+                    rx.tr(
+                        rx.th("TICKET STATUS"),
+                        rx.th("TICKET TYPE"),
+                    )
                 ),
-                rx.vstack(
-                    rx.heading("TICKET TYPE", size="sm"),
-                    rx.text(ProjectTicketState.ticket_ticket_type),
+                rx.tbody(
+                    rx.tr(
+                        rx.td(ProjectTicketState.ticket_status),
+                        rx.td(ProjectTicketState.ticket_ticket_type),
+                    )
                 ),
-                justify="space-between",
             ),
-            rx.hstack(
-                rx.vstack(
-                    rx.heading("CREATED ON", size="sm"),
-                    rx.text(ProjectTicketState.ticket_created_at),
+            rx.table(
+                rx.thead(
+                    rx.tr(
+                        rx.th("CREATED ON"),
+                        rx.th("UPDATED ON"),
+                    )
                 ),
-                rx.vstack(
-                    rx.heading("UPDATED ON", size="sm"),
-                    rx.text(ProjectTicketState.ticket_updated_at),
+                rx.tbody(
+                    rx.tr(
+                        rx.td(ProjectTicketState.ticket_created_at),
+                        rx.td(ProjectTicketState.ticket_updated_at),
+                    )
                 ),
-                justify="space-between",
             ),
             margin_y="2em",
         ),
         **props,
+        padding_x="2em",
+        border_right="1px solid gray",
     )
 
 
@@ -119,12 +136,37 @@ def comment_section(**props) -> rx.Component:
             ),
         ),
         **props,
+        padding_x="2em",
     )
 
 
 def ticket_history(**props) -> rx.Component:
     """Ticket history"""
-    return rx.text("Ticket history")
+    return rx.box(
+        rx.heading("Ticket History"),
+        rx.text("All history information for the ticket"),
+        rx.table(
+            rx.thead(
+                rx.tr(
+                    rx.th("Action"),
+                    rx.th("Previous Value"),
+                    rx.th("Present Value"),
+                    rx.th("Date Changed"),
+                )
+            ),
+            rx.tbody(
+                rx.foreach(
+                    ProjectTicketState.get_history,
+                    lambda history: rx.tr(
+                        rx.td(history.action),
+                        rx.td(history.previous_value),
+                        rx.td(history.present_value),
+                        rx.td(history.created_at),
+                    ),
+                )
+            ),
+        ),
+    )
 
 
 def attachment_section(**props) -> rx.Component:

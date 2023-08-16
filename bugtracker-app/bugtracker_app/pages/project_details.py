@@ -14,10 +14,10 @@ def project_details():
         rx.box(
             project_details_heading(margin_bottom="3em"),
             rx.box(
-                assigned_members(),
-                ticket_list(),
+                assigned_members(width="10%"),
+                ticket_list(width="10%"),
                 display="grid",
-                grid_template_columns="1fr 2fr",
+                grid_template_columns="auto auto",
                 gap="3em",
             ),
             width="100%",

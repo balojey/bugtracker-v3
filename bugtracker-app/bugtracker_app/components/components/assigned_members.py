@@ -27,6 +27,5 @@ def assigned_members(**props) -> rx.Component:
                 ),
             ),
         ),
-        width="100%",
         **props,
     )
