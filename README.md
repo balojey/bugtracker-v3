@@ -34,13 +34,21 @@ Goto [https://localhost:8000/docs](https://localhost:8000/docs)
 ### Use the API
 
 - Register a new user
+
   ![bugtracker-image-1](/assets/bt_1.png)
+
 - Login
+
   ![bugtracker-image-2](/assets/bt_2.png)
+
 - Create a project
+
   ![bugtracker-image-3](/assets/bt_3.png)
+
 - Report a bug
+
   ![bugtracker-image-4](/assets/bt_4.png)
+  
   ...
 
 ## Documentation
