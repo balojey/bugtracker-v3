@@ -7,7 +7,7 @@ class FileIn(BaseModel):
     """File model"""
 
     filename: str
-    url: str
+    url: HttpUrl
 
 
 class FileOut(FileIn):
