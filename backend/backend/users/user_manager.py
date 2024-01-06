@@ -4,12 +4,13 @@ from fastapi import Depends, Request, Response
 from fastapi_users import (
     BaseUserManager,
     InvalidPasswordException,
+    schemas,
 )
 from fastapi_users_db_beanie import ObjectIDIDMixin
 from beanie.odm.fields import PydanticObjectId
 
 from ..config import Settings
-from .schemas import UserCreate
+from .schemas import UserCreate, UserRead
 from ..models import User
 from .utils import get_user_db
 from ..auth.password_hash import password_helper
@@ -144,6 +145,9 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
         self, user: User, token: str, request: Optional[Request] = None
     ):
         print(f"Verification requested for user {user.id}. Verification Token: {token}")
+        user = await self.verify(token, request)
+        user_schema = UserRead
+        return schemas.model_validate(user_schema, user)
 
 
 async def get_user_manager(user_db=Depends(get_user_db)):
