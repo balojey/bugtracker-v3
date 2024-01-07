@@ -1,5 +1,5 @@
 import motor.motor_asyncio
-from .config import Settings
+from config import Settings
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 

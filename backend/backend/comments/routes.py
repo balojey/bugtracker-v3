@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_users import FastAPIUsers
 from beanie.odm.fields import PydanticObjectId
-from ..models import User
-from ..auth.backend import auth_backend
-from ..users.user_manager import get_user_manager
-from ..permissions import check_reporter, check_author_or_admin
+from models import User
+from auth.backend import auth_backend
+from users.user_manager import get_user_manager
+from permissions import check_reporter, check_author_or_admin
 from .schemas import CommentOut, CommentUpdate
 from .utils import read_comment, edit_comment, remove_comment
 

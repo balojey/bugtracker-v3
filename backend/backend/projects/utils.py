@@ -1,8 +1,8 @@
 from pprint import pprint
 from datetime import datetime
 from beanie.odm.fields import Link
-from ..models import Project, ProjectMember, User, Bug, Comment, File
-from ..roles import Role, ProjectMemberRole
+from models import Project, ProjectMember, User, Bug, Comment, File
+from roles import Role, ProjectMemberRole
 from .schemas import ProjectIn, ProjectOut, ProjectUpdate
 
 

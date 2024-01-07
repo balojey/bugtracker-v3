@@ -5,7 +5,7 @@ from fastapi_users.authentication.strategy.db import (
 )
 from .models import AccessToken
 from .utils import get_access_token_db
-from ..config import Settings
+from config import Settings
 
 
 settings = Settings()

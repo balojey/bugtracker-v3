@@ -5,4 +5,4 @@ micros:
     src: backend
     engine: python3.9
     primary: true
-    run: uvicorn backend.main:app
+    run: uvicorn main:app

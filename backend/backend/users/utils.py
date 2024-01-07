@@ -1,6 +1,6 @@
 from fastapi_users.db import BeanieUserDatabase
 from pydantic import EmailStr
-from ..models import User
+from models import User
 
 
 async def get_user_db():

@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 from beanie.odm.fields import PydanticObjectId
-from ..roles import ProjectMemberRole
+from roles import ProjectMemberRole
 
 
 class ProjectMemberIn(BaseModel):

@@ -1,5 +1,5 @@
 from datetime import datetime
-from ..models import Comment, Bug, ProjectMember
+from models import Comment, Bug, ProjectMember
 from .schemas import CommentIn, CommentUpdate
 
 

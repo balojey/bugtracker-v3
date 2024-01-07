@@ -1,6 +1,6 @@
 from httpx_oauth.clients.google import GoogleOAuth2
 from httpx_oauth.clients.github import GitHubOAuth2
-from ..config import Settings
+from config import Settings
 
 
 settings = Settings()

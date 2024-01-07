@@ -1,7 +1,7 @@
 anyio==3.7.1
 argon2-cffi==21.3.0
 argon2-cffi-bindings==21.2.0
--e git+https://github.com/ademolab91/bugtracker-v3.git@68f19178caaa028f9b9015baccfa0b5646aad030#egg=backend&subdirectory=backend
+# -e git+https://github.com/ademolab91/bugtracker-v3.git@68f19178caaa028f9b9015baccfa0b5646aad030#egg=backend&subdirectory=backend
 bcrypt==4.1.2
 beanie==1.23.6
 certifi==2023.11.17

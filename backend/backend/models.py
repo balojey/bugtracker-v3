@@ -1,12 +1,12 @@
 from beanie import Document, Link
-from typing import Optional
+from typing import Optional, Union
 from pydantic import Field, HttpUrl
 from datetime import datetime
 from fastapi_users.db import BeanieBaseUser
-from .auth.models import OAuthAccount
-from .roles import Role, ProjectMemberRole
-from .priority import Priority
-from .status import Status, ProjectStatus
+from auth.models import OAuthAccount
+from roles import Role, ProjectMemberRole
+from priority import Priority
+from status import Status, ProjectStatus
 
 
 class User(BeanieBaseUser, Document):
@@ -22,7 +22,7 @@ class Project(Document):
     """Project model"""
 
     name: str
-    description: str | None = None
+    description: Union[str, None] = None
     created_by: Link["User"]
     status: ProjectStatus = ProjectStatus.NEW
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -33,8 +33,8 @@ class Bug(Document):
     """Bug model"""
 
     title: str
-    description: str | None = None
-    steps_to_reproduce: str | None = None
+    description: Union[str, None] = None
+    steps_to_reproduce: Union[str, None] = None
     priority: Priority
     status: Status = Status.NEW
     assigned_developer: Optional[Link["ProjectMember"]]

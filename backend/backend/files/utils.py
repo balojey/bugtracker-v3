@@ -1,4 +1,4 @@
-from ..models import File, Bug
+from models import File, Bug
 from .schemas import FileIn
 
 

@@ -1,19 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_users import FastAPIUsers
 from beanie.odm.fields import PydanticObjectId
-from ..models import User
-from ..auth.backend import auth_backend
-from ..users.user_manager import get_user_manager
-from ..project_members.utils import (
+from models import User
+from auth.backend import auth_backend
+from users.user_manager import get_user_manager
+from project_members.utils import (
     read_project_member,
     fetch_project_member,
     fetch_project_member_by_user,
 )
-from ..comments.schemas import CommentOut, CommentIn
-from ..comments.utils import write_comment, read_comments
-from ..files.schemas import FileOut, FileIn
-from ..files.utils import save_attachment, read_attachments
-from ..permissions import (
+from comments.schemas import CommentOut, CommentIn
+from comments.utils import write_comment, read_comments
+from files.schemas import FileOut, FileIn
+from files.utils import save_attachment, read_attachments
+from permissions import (
     check_user_presence_in_project,
     check_bug_assignment_permission_for_user,
     check_reporter,
@@ -212,7 +212,9 @@ async def get_comments(bug_id: str):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
 
-@router.post("/{bug_id}/attachments", response_model=FileOut, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/{bug_id}/attachments", response_model=FileOut, status_code=status.HTTP_201_CREATED
+)
 async def upload_attachment(
     bug_id: str, file: FileIn, user: User = Depends(current_active_verified_user)
 ):

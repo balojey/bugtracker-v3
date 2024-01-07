@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from fastapi_users import FastAPIUsers
 from beanie.odm.fields import PydanticObjectId
 from .user_manager import get_user_manager
-from ..models import User
-from ..auth.backend import auth_backend
+from models import User
+from auth.backend import auth_backend
 from .schemas import UserRead, UserUpdate
 
 

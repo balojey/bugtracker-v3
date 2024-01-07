@@ -1,24 +1,24 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_users import FastAPIUsers
 from beanie.odm.fields import PydanticObjectId
-from ..models import User
-from ..users.user_manager import get_user_manager
-from ..auth.backend import auth_backend
-from ..project_members.schemas import (
+from models import User
+from users.user_manager import get_user_manager
+from auth.backend import auth_backend
+from project_members.schemas import (
     ProjectMemberOut,
     ProjectMemberIn,
 )
-from ..project_members.utils import (
+from project_members.utils import (
     write_project_member,
     fetch_project_members,
 )
-from ..permissions import (
+from permissions import (
     check_project_permission,
     check_user_presence_in_project,
 )
-from ..bugs.schemas import BugIn, BugOut
+from bugs.schemas import BugIn, BugOut
 
-from ..bugs.utils import write_bug, read_bugs
+from bugs.utils import write_bug, read_bugs
 from .utils import (
     write_project,
     read_project,

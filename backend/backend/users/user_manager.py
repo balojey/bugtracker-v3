@@ -9,11 +9,11 @@ from fastapi_users import (
 from fastapi_users_db_beanie import ObjectIDIDMixin
 from beanie.odm.fields import PydanticObjectId
 
-from ..config import Settings
+from config import Settings
 from .schemas import UserCreate, UserRead
-from ..models import User
+from models import User
 from .utils import get_user_db
-from ..auth.password_hash import password_helper
+from auth.password_hash import password_helper
 
 
 settings = Settings()

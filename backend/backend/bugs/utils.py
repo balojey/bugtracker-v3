@@ -1,10 +1,10 @@
 from pprint import pprint
 from datetime import datetime
 from beanie.odm.fields import Link
-from ..models import Bug, Comment, Project, User, File, ProjectMember
-from ..projects.utils import read_project
-from ..status import ProjectStatus
-from ..roles import ProjectMemberRole
+from models import Bug, Comment, Project, User, File, ProjectMember
+from projects.utils import read_project
+from status import ProjectStatus
+from roles import ProjectMemberRole
 from .schemas import BugIn, BugOut, BugUpdate, ChangePriority, ChangeStatus
 
 

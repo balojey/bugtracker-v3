@@ -1,7 +1,7 @@
 from datetime import datetime
-from ..projects.utils import read_project
-from ..models import ProjectMember, Project, User
-from ..roles import ProjectMemberRole
+from projects.utils import read_project
+from models import ProjectMember, Project, User
+from roles import ProjectMemberRole
 from .schemas import ProjectMemberIn, ProjectMemberOut, ProjectMemberUpdate
 
 

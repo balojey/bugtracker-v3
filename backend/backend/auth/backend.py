@@ -1,5 +1,5 @@
 from fastapi_users.authentication import AuthenticationBackend, JWTStrategy
-from ..config import Settings
+from config import Settings
 from .transport import bearer_transport
 from .strategy import get_database_strategy
 

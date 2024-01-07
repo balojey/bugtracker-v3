@@ -1,10 +1,10 @@
 from pprint import pprint
 from beanie.odm.fields import Link
-from .models import Project, User, ProjectMember, Bug, Comment
-from .projects.utils import read_project
-from .projects.schemas import ProjectOut
-from .project_members.utils import fetch_project_member, fetch_project_member_by_user
-from .roles import ProjectMemberRole
+from models import Project, User, ProjectMember, Bug, Comment
+from projects.utils import read_project
+from projects.schemas import ProjectOut
+from project_members.utils import fetch_project_member, fetch_project_member_by_user
+from roles import ProjectMemberRole
 
 
 async def check_project_permission(user: User, project: Project) -> bool:

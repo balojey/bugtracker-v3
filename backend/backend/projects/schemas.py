@@ -1,18 +1,18 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, Union
 from beanie.odm.fields import PydanticObjectId, BackLink
 from datetime import datetime
-from ..users.schemas import UserRead
-from ..models import User
-from ..status import ProjectStatus
-from ..project_members.schemas import ProjectMemberOut
+from users.schemas import UserRead
+from models import User
+from status import ProjectStatus
+from project_members.schemas import ProjectMemberOut
 
 
 class ProjectIn(BaseModel):
     """Project model"""
 
     name: str
-    description: str | None = None
+    description: Union[str, None] = None
 
 
 class ProjectOut(ProjectIn):

@@ -1,10 +1,10 @@
 from beanie.odm.fields import PydanticObjectId
 from fastapi import APIRouter
 from fastapi_users import FastAPIUsers
-from ..users.user_manager import get_user_manager
-from ..models import User
-from ..users.schemas import UserRead, UserCreate
-from ..config import Settings
+from users.user_manager import get_user_manager
+from models import User
+from users.schemas import UserRead, UserCreate
+from config import Settings
 from .backend import auth_backend
 from .oauth2 import google_oauth_client, github_oauth_client
 
