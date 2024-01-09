@@ -4,6 +4,8 @@ Bugtracker API is a suite for managing bugs.
 
 This API help teams work better by enabling every member on a team to submit and correct bugs. This app is geared towards developers, QA testers, project managers and product owners.
 
+[Live demo](https://bugtracker_api-1-a8833088.deta.app/docs)
+
 ## Features
 
 The following are the features of this application
